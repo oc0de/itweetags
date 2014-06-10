@@ -13,6 +13,7 @@
 @interface EVMasterViewController () {
     NSMutableArray *_objects;
 }
+
 @end
 
 @implementation EVMasterViewController
@@ -28,15 +29,37 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
+
+
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)showMessage:(id)sender {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Album" message:@"Enter a name for this album." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [message show];
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    
+    NSString *inputText = [[alertView textFieldAtIndex:0] text];
+    if ([inputText length] >= 1) {
+        return YES;
+    } else {
+        return NO;
+    }
+    NSLog(@"%@", inputText);
+}
+
 
 - (void)insertNewObject:(id)sender
 {
