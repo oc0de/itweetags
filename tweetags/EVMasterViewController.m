@@ -44,29 +44,43 @@
 }
 
 - (IBAction)showMessage:(id)sender {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Album" message:@"Enter a name for this album." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Tag" message:@"Enter a name for this tag." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
     [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [message show];
 }
 
+
+- (NSString*)returnTextFiledAlertMessage:(UIAlertView *)alertView {
+    
+    return [[alertView textFieldAtIndex:0] text];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"Clicked button index 0");
+    } else {
+        
+        [self insertNewObject:[self returnTextFiledAlertMessage:(UIAlertView *)alertView]];
+    }
+}
+
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     
-    NSString *inputText = [[alertView textFieldAtIndex:0] text];
-    if ([inputText length] >= 1) {
+    if ([[self returnTextFiledAlertMessage:(UIAlertView*)alertView] length] >= 1) {
         return YES;
     } else {
         return NO;
     }
-    NSLog(@"%@", inputText);
 }
 
 
-- (void)insertNewObject:(id)sender
+- (void)insertNewObject:(NSString *)sender
 {
     if (!_objects) {
         _objects = [[NSMutableArray alloc] init];
     }
-    [_objects insertObject:[NSDate date] atIndex:0];
+    [_objects insertObject:[sender description ] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -87,7 +101,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = _objects[indexPath.row];
+    NSString *object = _objects[indexPath.row];
     cell.textLabel.text = [object description];
     return cell;
 }
