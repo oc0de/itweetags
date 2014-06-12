@@ -7,11 +7,12 @@
 //
 
 #import "EVMasterViewController.h"
-
 #import "EVDetailViewController.h"
+#import "EVAccountsViewController.h"
 
 @interface EVMasterViewController () {
     NSMutableArray *_objects;
+
 }
 
 @end
@@ -26,14 +27,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
-
-
-    
+    NSLog(@"%@",[self.accountName description]);
 }
 
 
@@ -142,7 +139,7 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
+        NSString *object = _objects[indexPath.row];
         [[segue destinationViewController] setDetailItem:object];
     }
 }

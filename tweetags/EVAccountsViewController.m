@@ -7,6 +7,7 @@
 //
 
 #import "EVAccountsViewController.h"
+#import "EVMasterViewController.h"
 
 
 
@@ -28,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.accounts = [[NSMutableArray alloc] init];
     [self retrieveAccounts:ACAccountTypeIdentifierTwitter options:nil];
 }
@@ -66,6 +66,17 @@
 }
 
 #pragma mark - Navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showTags"]) {
+        NSIndexPath *selectedIndex = self.tableView.indexPathForSelectedRow;
+        EVMasterViewController *showTags = [segue destinationViewController];
+        NSString *title = [NSString stringWithFormat:@"%@'s tags",[self.tableView cellForRowAtIndexPath:selectedIndex].textLabel.text];
+        showTags.title = title;
+        showTags.accountName = [self.tableView cellForRowAtIndexPath:selectedIndex].textLabel.text;
+    }
+    
+}
 
 //// In a storyboard-based application, you will often want to do a little preparation before navigation
 //- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

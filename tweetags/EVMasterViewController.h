@@ -10,4 +10,6 @@
 
 @interface EVMasterViewController : UITableViewController
 
+@property (strong, nonatomic) NSString *accountName;
+
 @end
