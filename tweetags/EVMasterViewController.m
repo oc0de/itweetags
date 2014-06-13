@@ -9,6 +9,7 @@
 #import "EVMasterViewController.h"
 #import "EVDetailViewController.h"
 #import "EVAccountsViewController.h"
+#import <Parse/Parse.h>
 
 @interface EVMasterViewController () {
     NSMutableArray *_objects;
@@ -31,6 +32,7 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
     NSLog(@"%@",[self.accountName description]);
+
 }
 
 
@@ -80,6 +82,11 @@
     [_objects insertObject:[sender description ] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    PFObject *tag = [PFObject objectWithClassName:@"TagClass"];
+    NSString *tagName = [NSString stringWithFormat:@"%@",[sender description]];
+    tag[@"ownerName"] = self.accountName;
+    tag[@"tagName"] = tagName;
+    [tag saveInBackground];
 }
 
 #pragma mark - Table View

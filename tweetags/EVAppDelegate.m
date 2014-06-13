@@ -7,13 +7,16 @@
 //
 
 #import "EVAppDelegate.h"
+#import <Parse/Parse.h>
 
 @implementation EVAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [Parse setApplicationId:(@"GEHDhEc21mGzdGJRKIWSUFP6RiGWHcuXlIg3g9jF")
+                  clientKey:@"0CwhKh43GMQb7u8MquzKmi3khHC025yGS4Qrf8Bh"];
     return YES;
+    
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
