@@ -29,33 +29,25 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMessage:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewTagMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
-    NSLog(@"%@",[self.accountName description]);
     [self retrieveTagsNameFromParse];
 
 }
-
 
 -(void)retrieveTagsNameFromParse {
     PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
     [tagClass whereKey:@"ownerName" equalTo:@"@butb0rn"];
     [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
         if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %lu scores.", tags.count);
-            // Do something with the found objects
             for (PFObject *tag in tags) {
-                NSLog(@"%@", tag[@"tagName"]);
+                [self insertNewObject:tag[@"tagName"]];
             }
         } else {
-            // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -63,12 +55,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)showMessage:(id)sender {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Tag" message:@"Enter a name for this tag." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+- (IBAction)createNewTagMessage:(id)sender {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Tag" message:@"Enter a name for this tag."
+                                                     delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
     [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
     [message show];
 }
 
+
+
+- (IBAction)repetitiveTagNameMessage {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"You Have this tag already."
+                                                     delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert setAlertViewStyle:UIAlertViewStyleDefault];
+    [alert show];
+}
 
 - (NSString*)returnTextFiledAlertMessage:(UIAlertView *)alertView {
     
@@ -78,11 +79,33 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        NSLog(@"Clicked button index 0");
     } else {
-        
-        [self insertNewObject:[self returnTextFiledAlertMessage:(UIAlertView *)alertView]];
+        NSString *sender = [self returnTextFiledAlertMessage:(UIAlertView *)alertView];
+        if ([self checkUniqueTagName:[sender description]]) {
+            [self insertNewObject:[sender description]];
+            [self saveTagNameToParse:sender];
+        }else {
+            [self repetitiveTagNameMessage];
+        }
     }
+}
+
+
+-(BOOL)checkUniqueTagName:(NSString *)newTag {
+    for (NSString *tag in _objects) {
+        if ([newTag isEqualToString:tag] ) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+-(void)saveTagNameToParse:(NSString *)sender {
+    PFObject *tag = [PFObject objectWithClassName:@"TagClass"];
+    NSString *tagName = [NSString stringWithFormat:@"%@",[sender description]];
+    tag[@"ownerName"] = self.accountName;
+    tag[@"tagName"] = tagName;
+    [tag saveInBackground];
 }
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
@@ -103,11 +126,6 @@
     [_objects insertObject:[sender description ] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    PFObject *tag = [PFObject objectWithClassName:@"TagClass"];
-    NSString *tagName = [NSString stringWithFormat:@"%@",[sender description]];
-    tag[@"ownerName"] = self.accountName;
-    tag[@"tagName"] = tagName;
-    [tag saveInBackground];
 }
 
 #pragma mark - Table View
