@@ -36,8 +36,9 @@
 }
 
 -(void)retrieveTagsNameFromParse {
+    NSString *ownerName = self.accountName;
     PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
-    [tagClass whereKey:@"ownerName" equalTo:@"@butb0rn"];
+    [tagClass whereKey:@"ownerName" equalTo:ownerName];
     [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
         if (!error) {
             for (PFObject *tag in tags) {
@@ -107,6 +108,21 @@
     tag[@"tagName"] = tagName;
     [tag saveInBackground];
 }
+//
+//-(void)removeTagNameFromParse:(NSString *)sender {
+//    PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
+//    [tagClass whereKey:@"ownerName" equalTo:@"@butb0rn"];
+//    [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
+//        if (!error) {
+//            for (PFObject *tag in tags) {
+//                [self insertNewObject:tag[@"tagName"]];
+//            }
+//        } else {
+//            NSLog(@"Error: %@ %@", error, [error userInfo]);
+//        }
+//    }];
+//    
+//}
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     
@@ -160,6 +176,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        NSLog(@"Deteling part");
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
