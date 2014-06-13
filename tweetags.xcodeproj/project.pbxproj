@@ -26,6 +26,16 @@
 		8F5DCC1B194676AF0047F1E2 /* welcomePic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8F5DCC1A194676AF0047F1E2 /* welcomePic.jpg */; };
 		8F68618919467D1400567F45 /* EVAccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F68618819467D1400567F45 /* EVAccountsViewController.m */; };
 		8F68618B1946807100567F45 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F68618A1946807100567F45 /* Accounts.framework */; };
+		8FE7BA19194A95A7008A81F5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA18194A95A7008A81F5 /* Parse.framework */; };
+		8FE7BA1B194A9642008A81F5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA1A194A9642008A81F5 /* AudioToolbox.framework */; };
+		8FE7BA1D194A964F008A81F5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA1C194A964F008A81F5 /* CFNetwork.framework */; };
+		8FE7BA1F194A9663008A81F5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA1E194A9663008A81F5 /* CoreLocation.framework */; };
+		8FE7BA21194A9677008A81F5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA20194A9677008A81F5 /* libz.dylib */; };
+		8FE7BA23194A9685008A81F5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA22194A9685008A81F5 /* MobileCoreServices.framework */; };
+		8FE7BA25194A9699008A81F5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA24194A9699008A81F5 /* QuartzCore.framework */; };
+		8FE7BA27194A96A9008A81F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA26194A96A9008A81F5 /* Security.framework */; };
+		8FE7BA29194A96BB008A81F5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA28194A96BB008A81F5 /* StoreKit.framework */; };
+		8FE7BA2B194A96D0008A81F5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA2A194A96D0008A81F5 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +75,16 @@
 		8F68618719467D1400567F45 /* EVAccountsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVAccountsViewController.h; sourceTree = "<group>"; };
 		8F68618819467D1400567F45 /* EVAccountsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVAccountsViewController.m; sourceTree = "<group>"; };
 		8F68618A1946807100567F45 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		8FE7BA18194A95A7008A81F5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		8FE7BA1A194A9642008A81F5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8FE7BA1C194A964F008A81F5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		8FE7BA1E194A9663008A81F5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8FE7BA20194A9677008A81F5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		8FE7BA22194A9685008A81F5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8FE7BA24194A9699008A81F5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8FE7BA26194A96A9008A81F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8FE7BA28194A96BB008A81F5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		8FE7BA2A194A96D0008A81F5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,10 +92,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F68618B1946807100567F45 /* Accounts.framework in Frameworks */,
+				8FE7BA2B194A96D0008A81F5 /* SystemConfiguration.framework in Frameworks */,
+				8FE7BA29194A96BB008A81F5 /* StoreKit.framework in Frameworks */,
+				8FE7BA27194A96A9008A81F5 /* Security.framework in Frameworks */,
+				8FE7BA25194A9699008A81F5 /* QuartzCore.framework in Frameworks */,
+				8FE7BA23194A9685008A81F5 /* MobileCoreServices.framework in Frameworks */,
+				8FE7BA21194A9677008A81F5 /* libz.dylib in Frameworks */,
+				8FE7BA1F194A9663008A81F5 /* CoreLocation.framework in Frameworks */,
 				8F5DCBE31946761C0047F1E2 /* CoreGraphics.framework in Frameworks */,
+				8FE7BA1D194A964F008A81F5 /* CFNetwork.framework in Frameworks */,
+				8FE7BA1B194A9642008A81F5 /* AudioToolbox.framework in Frameworks */,
+				8F68618B1946807100567F45 /* Accounts.framework in Frameworks */,
 				8F5DCBE51946761C0047F1E2 /* UIKit.framework in Frameworks */,
 				8F5DCBE11946761C0047F1E2 /* Foundation.framework in Frameworks */,
+				8FE7BA19194A95A7008A81F5 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +146,16 @@
 		8F5DCBDF1946761C0047F1E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FE7BA2A194A96D0008A81F5 /* SystemConfiguration.framework */,
+				8FE7BA28194A96BB008A81F5 /* StoreKit.framework */,
+				8FE7BA26194A96A9008A81F5 /* Security.framework */,
+				8FE7BA24194A9699008A81F5 /* QuartzCore.framework */,
+				8FE7BA22194A9685008A81F5 /* MobileCoreServices.framework */,
+				8FE7BA20194A9677008A81F5 /* libz.dylib */,
+				8FE7BA1E194A9663008A81F5 /* CoreLocation.framework */,
+				8FE7BA1C194A964F008A81F5 /* CFNetwork.framework */,
+				8FE7BA1A194A9642008A81F5 /* AudioToolbox.framework */,
+				8FE7BA18194A95A7008A81F5 /* Parse.framework */,
 				8F68618A1946807100567F45 /* Accounts.framework */,
 				8F5DCBE01946761C0047F1E2 /* Foundation.framework */,
 				8F5DCBE21946761C0047F1E2 /* CoreGraphics.framework */,
@@ -220,6 +260,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = ehsan_valizadeh;
 				TargetAttributes = {
+					8F5DCBDC1946761C0047F1E2 = {
+						DevelopmentTeam = UQ82FRQ36Y;
+					};
 					8F5DCC001946761C0047F1E2 = {
 						TestTargetID = 8F5DCBDC1946761C0047F1E2;
 					};
@@ -401,10 +444,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tweetags/tweetags-Prefix.pch";
 				INFOPLIST_FILE = "tweetags/tweetags-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -414,10 +464,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tweetags/tweetags-Prefix.pch";
 				INFOPLIST_FILE = "tweetags/tweetags-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
