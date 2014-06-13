@@ -32,8 +32,29 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
     NSLog(@"%@",[self.accountName description]);
+    [self retrieveTagsNameFromParse];
 
 }
+
+
+-(void)retrieveTagsNameFromParse {
+    PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
+    [tagClass whereKey:@"ownerName" equalTo:@"@butb0rn"];
+    [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %lu scores.", tags.count);
+            // Do something with the found objects
+            for (PFObject *tag in tags) {
+                NSLog(@"%@", tag[@"tagName"]);
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+}
+
 
 
 - (void)didReceiveMemoryWarning
