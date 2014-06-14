@@ -9,7 +9,9 @@
 #import "EVMasterViewController.h"
 #import "EVDetailViewController.h"
 #import "EVAccountsViewController.h"
+#import "EVStreamViewController.h"
 #import <Parse/Parse.h>
+
 
 @interface EVMasterViewController () {
     NSMutableArray *_objects;
@@ -200,10 +202,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSString *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+    if ([[segue identifier] isEqualToString:@"showTweets"]) {
+        NSIndexPath *selectedTag = [self.tableView indexPathForSelectedRow];
+        ACAccount *account = [self account];
+        EVStreamViewController *showTweets = [segue destinationViewController];
+        showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
+        showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
+        showTweets.account = account;
     }
 }
 

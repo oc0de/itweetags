@@ -8,6 +8,7 @@
 
 #import "EVAccountsViewController.h"
 #import "EVMasterViewController.h"
+#import "EVStreamViewController.h"
 
 
 
@@ -74,19 +75,10 @@
         NSString *title = [NSString stringWithFormat:@"%@'s tags",[self.tableView cellForRowAtIndexPath:selectedIndex].textLabel.text];
         showTags.title = title;
         showTags.accountName = [self.tableView cellForRowAtIndexPath:selectedIndex].textLabel.text;
+        ACAccount *account = [self.accounts objectAtIndex:selectedIndex.row];
+        showTags.account = account;
     }
-    
 }
-
-//// In a storyboard-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    NSIndexPath *selectedIndex = self.tableView.indexPathForSelectedRow;
-//    ACAccount *account = [self.accounts objectAtIndex:selectedIndex.row];
-//    StreamViewController *dest = [segue destinationViewController];
-//    dest.title = [self.tableView cellForRowAtIndexPath:selectedIndex].textLabel.text;
-//    dest.account = account;
-//}
 
 
 @end

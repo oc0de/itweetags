@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Accounts/Accounts.h>
 
 @interface EVMasterViewController : UITableViewController
 
 @property (strong, nonatomic) NSString *accountName;
+@property (strong, nonatomic) ACAccount *account;
 
 @end
