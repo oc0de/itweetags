@@ -14,9 +14,10 @@
 
 
 @interface EVMasterViewController () {
-    NSMutableArray *_objects;
+    //NSMutableArray *_objects;
 }
 @property (strong, nonatomic) NSArray *searchResults;
+@property (strong, nonatomic) NSMutableArray *objects;
 
 @end
 
@@ -96,7 +97,7 @@
 
 
 -(BOOL)checkUniqueTagName:(NSString *)newTag {
-    for (NSString *tag in _objects) {
+    for (NSString *tag in self.objects) {
         if ([newTag isEqualToString:tag] ) {
             return NO;
         }
@@ -139,10 +140,10 @@
 
 - (void)insertNewObject:(NSString *)sender
 {
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
+    if (!self.objects) {
+        self.objects = [[NSMutableArray alloc] init];
     }
-    [_objects insertObject:[sender description ] atIndex:0];
+    [self.objects insertObject:[sender description ] atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -157,10 +158,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searchDisplayController.searchResultsTableView ) {
-        return self.searchResults.count;
+        return [self.searchResults count];
     }
     else {
-        return _objects.count;
+        return [self.objects count];
     }
 }
 
@@ -169,7 +170,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
@@ -178,28 +179,10 @@
         cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
         
     } else {
-        cell.textLabel.text = [_objects objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self.objects objectAtIndex:indexPath.row];
     }
     return cell;
 }
-
-
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *cellID = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//    }
-//    if (tableView == self.searchDisplayController.searchResultsTableView) {
-//        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
-//    }
-//    else {
-//        NSString *object = _objects[indexPath.row];
-//        cell.textLabel.text = [object description];
-//    }
-//    return cell;
-//}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -209,7 +192,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+        [self.objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         NSLog(@"Deteling part");
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -223,8 +206,7 @@
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", searchText];
-    //    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"contains[c] %@", searchText];
-    self.searchResults = [_objects filteredArrayUsingPredicate:predicate];
+    self.searchResults = [self.objects filteredArrayUsingPredicate:predicate];
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -243,24 +225,35 @@
 }
 */
 
-/*
+
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    
     if ([[segue identifier] isEqualToString:@"showTweets"]) {
         NSIndexPath *selectedTag = [self.tableView indexPathForSelectedRow];
         ACAccount *account = [self account];
-        EVStreamViewController *showTweets = [segue destinationViewController];
-        showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
-        showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
-        showTweets.account = account;
+        EVStreamViewController *showTweets = segue.destinationViewController;
+       
+        if (self.searchDisplayController.active) {
+            NSIndexPath *selectedTagFromSearchResult = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+            showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
+            showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
+            showTweets.account = account;
+             NSLog(@"acitve");
+        } else {
+            showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
+            showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
+            showTweets.account = account;
+             NSLog(@"not");
+        }
     }
 }
 
