@@ -31,27 +31,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.searchResults = [[NSArray alloc] init];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewTagMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
     [self retrieveTagsNameFromParse];
 
-}
-
--(void)retrieveTagsNameFromParse {
-    NSString *ownerName = self.accountName;
-    PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
-    [tagClass whereKey:@"ownerName" equalTo:ownerName];
-    [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
-        if (!error) {
-            for (PFObject *tag in tags) {
-                [self insertNewObject:tag[@"tagName"]];
-            }
-        } else {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,6 +89,25 @@
     return YES;
 }
 
+#pragma Retrieve data from parse
+
+-(void)retrieveTagsNameFromParse {
+    NSString *ownerName = self.accountName;
+    PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
+    [tagClass whereKey:@"ownerName" equalTo:ownerName];
+    [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
+        if (!error) {
+            for (PFObject *tag in tags) {
+                [self insertNewObject:tag[@"tagName"]];
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+}
+
+#pragma save data into parse
+
 -(void)saveTagNameToParse:(NSString *)sender {
     PFObject *tag = [PFObject objectWithClassName:@"TagClass"];
     NSString *tagName = [NSString stringWithFormat:@"%@",[sender description]];
@@ -112,21 +115,18 @@
     tag[@"tagName"] = tagName;
     [tag saveInBackground];
 }
-//
-//-(void)removeTagNameFromParse:(NSString *)sender {
-//    PFQuery *tagClass = [PFQuery queryWithClassName:@"TagClass"];
-//    [tagClass whereKey:@"ownerName" equalTo:@"@butb0rn"];
-//    [tagClass findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
+
+-(void)removeTagNameFromParse:(NSString *)tagName {
+//    [deleteQuery whereKey:@"ownerName" equalTo:@"@butb0rn"];
+//    [deleteQuery findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
 //        if (!error) {
-//            for (PFObject *tag in tags) {
-//                [self insertNewObject:tag[@"tagName"]];
-//            }
+//            
 //        } else {
 //            NSLog(@"Error: %@ %@", error, [error userInfo]);
 //        }
 //    }];
-//    
-//}
+    
+}
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     
@@ -192,11 +192,28 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSString *tagName = [self.objects objectAtIndex:indexPath.row];
+        NSString *ownerName = self.accountName;
+        PFQuery *query = [PFQuery queryWithClassName:@"TagClass"];
+        [query whereKey:@"ownerName" equalTo:ownerName];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *object,NSError *err)
+         {
+             if (!err && object.count != 0){
+                 for (PFObject *tag in object) {
+                     if ([tag[@"tagName"] isEqualToString:tagName]) {
+                         [tag deleteEventually];
+                     }
+                 }
+             }
+             else{
+                 NSLog(@"Error");
+             }
+         }];
         [self.objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        NSLog(@"Deteling part");
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+       
     }
 }
 
@@ -218,21 +235,8 @@
     
     return YES;
 }
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
-
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-
+#pragma prepareForSegue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -247,12 +251,10 @@
             showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
             showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
             showTweets.account = account;
-             NSLog(@"acitve");
         } else {
             showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
             showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
             showTweets.account = account;
-             NSLog(@"not");
         }
     }
 }

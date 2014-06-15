@@ -15,6 +15,7 @@
 {
     [Parse setApplicationId:(@"GEHDhEc21mGzdGJRKIWSUFP6RiGWHcuXlIg3g9jF")
                   clientKey:@"0CwhKh43GMQb7u8MquzKmi3khHC025yGS4Qrf8Bh"];
+ //   [defaultACL setPublicWriteAccess:YES];
     return YES;
     
 }
