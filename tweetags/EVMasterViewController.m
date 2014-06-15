@@ -15,8 +15,8 @@
 
 @interface EVMasterViewController () {
     NSMutableArray *_objects;
-
 }
+@property (strong, nonatomic) NSArray *searchResults;
 
 @end
 
@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.searchResults = [[NSArray alloc] init];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewTagMessage:)];
     self.navigationItem.rightBarButtonItem = addButton;
     [self retrieveTagsNameFromParse];
@@ -155,21 +156,53 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView ) {
+        return self.searchResults.count;
+    }
+    else {
+        return _objects.count;
+    }
 }
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    NSString *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    static NSString *cellID = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+        
+    } else {
+        cell.textLabel.text = [_objects objectAtIndex:indexPath.row];
+    }
     return cell;
 }
 
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *cellID = @"Cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//    }
+//    if (tableView == self.searchDisplayController.searchResultsTableView) {
+//        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+//    }
+//    else {
+//        NSString *object = _objects[indexPath.row];
+//        cell.textLabel.text = [object description];
+//    }
+//    return cell;
+//}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
@@ -184,6 +217,25 @@
     }
 }
 
+
+#pragma Search Methods
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF beginswith[c] %@", searchText];
+    //    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"contains[c] %@", searchText];
+    self.searchResults = [_objects filteredArrayUsingPredicate:predicate];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath

@@ -37,7 +37,6 @@
 -(void)retrieveTwitterStream {
     NSString *hashtag = [NSString stringWithFormat:@"#%@",self.hashtag];
     NSString *encodedQuery = [hashtag stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@",encodedQuery);
     NSURL *url  = [NSURL URLWithString:  @"https://api.twitter.com/1.1/search/tweets.json"];
     NSDictionary *params = @{@"q" : encodedQuery, @"count" : @"50"};
     SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];

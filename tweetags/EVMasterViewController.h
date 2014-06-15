@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
 
-@interface EVMasterViewController : UITableViewController
+@interface EVMasterViewController : UITableViewController <UITableViewDelegate,
+                                    UITableViewDataSource, UISearchDisplayDelegate>
 
 @property (strong, nonatomic) NSString *accountName;
 @property (strong, nonatomic) ACAccount *account;
