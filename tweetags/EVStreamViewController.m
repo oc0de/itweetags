@@ -18,7 +18,6 @@
 
 @implementation EVStreamViewController
 
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -100,8 +99,6 @@
         }
         
     }
-    //cell.tweetText.delegate = self;
-//    [self textViewDidChange:cell.tweetText];
 
     return cell;
 }
