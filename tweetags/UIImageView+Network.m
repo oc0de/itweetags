@@ -8,7 +8,7 @@
 #import "UIImageView+Network.h"
 #import "FTWCache.h"
 #import <objc/runtime.h>
-//#import "AppDelegate.h"
+#import "EVAppDelegate.h"
 
 static char URL_KEY;
 
@@ -28,7 +28,7 @@ static char URL_KEY;
 	   return;
 	}
 
-//    [(AppDelegate*)[[UIApplication sharedApplication] delegate] incrementNetworkActivity];
+    [(EVAppDelegate*)[[UIApplication sharedApplication] delegate] incrementNetworkActivity];
 	dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
 	dispatch_async(queue, ^{
 		NSData *data = [NSData dataWithContentsOfURL:url];
@@ -41,10 +41,9 @@ static char URL_KEY;
 			if ([self.imageURL.absoluteString isEqualToString:url.absoluteString]) {
 				dispatch_sync(dispatch_get_main_queue(), ^{
 					self.image = imageFromData;
-//                    [(AppDelegate*)[[UIApplication sharedApplication] delegate] decrementNetworkActivity];
+                    [(EVAppDelegate*)[[UIApplication sharedApplication] delegate] decrementNetworkActivity];
 				});
 			} else {
-//				NSLog(@"urls are not the same, bailing out!");
 			}
 		}
 		self.imageURL = nil;
