@@ -14,6 +14,8 @@
 
 @interface EVStreamViewController ()
 
+@property (strong,nonatomic) EVTableViewCell *customCell;
+
 @end
 
 @implementation EVStreamViewController
@@ -33,7 +35,8 @@
     if ([self.account.accountType.identifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
         [self retrieveTwitterStream];
     }
-//    self.tableView.delegate = self;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 
 -(void)retrieveTwitterStream {
@@ -99,8 +102,48 @@
         }
         
     }
-
+    
     return cell;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.customCell) {
+        self.customCell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
+    }
+    
+    NSDictionary *tweet = self.updates[indexPath.row];
+    NSDictionary *userInfo = tweet[@"user"];
+    if ([self.account.accountType.identifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
+        self.customCell.userName.text      = [NSString stringWithFormat:@"%@",userInfo[@"name"]];
+        self.customCell.screenName.text    = [NSString stringWithFormat:@"@%@",userInfo[@"screen_name"]];
+        self.customCell.tweetText.text     = [NSString stringWithFormat:@"%@",tweet[@"text"]];
+        NSString *imageUrl      = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url"]];
+        NSString *imageHttpsUrl = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url_https"]];
+        if (imageUrl != nil ) {
+            self.customCell.thumbnail.layer.cornerRadius = 4.5;
+            self.customCell.thumbnail.clipsToBounds = YES;
+            [self.customCell.thumbnail loadImageFromURL:[NSURL URLWithString:imageUrl]
+                                       placeholderImage:[UIImage imageNamed:@"noProfileImage"] cachingKey:imageUrl];
+        } else if (imageHttpsUrl != nil) {
+            NSLog(@"imageHttpsUrl");
+            [self.customCell.thumbnail loadImageFromURL:[NSURL URLWithString:imageHttpsUrl]
+                                       placeholderImage:[UIImage imageNamed:@"noProfileImage"] cachingKey:imageHttpsUrl];
+        } else {
+            self.customCell.thumbnail.image = [UIImage imageNamed:@"noProfileImage"];
+        }
+    }
+    
+    [self.customCell layoutIfNeeded];
+    
+    CGFloat height = [self.customCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    
+    return height+1;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 15;
 }
 
 
@@ -110,27 +153,15 @@
 }
 
 
-- (void)textViewDidChange:(UITextView *)textView
-{
-    CGFloat fixedWidth = textView.frame.size.width;
-    NSLog(@"%f",textView.frame.size.height);
-    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-    CGRect newFrame = textView.frame;
-    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
-    NSLog(@"%f",newSize.height);
-    textView.frame = newFrame;
-
-}
-
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

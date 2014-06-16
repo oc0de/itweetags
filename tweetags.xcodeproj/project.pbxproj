@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F31A2EB194BDAA100974FD6 /* EVStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F31A2EA194BDAA100974FD6 /* EVStreamViewController.m */; };
 		8F31A2ED194BE33200974FD6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F31A2EC194BE33200974FD6 /* Social.framework */; };
+		8F4F1849194F9A54009B3F6A /* noProfileImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8F4F1848194F9A54009B3F6A /* noProfileImage.jpg */; };
 		8F5DCBE11946761C0047F1E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5DCBE01946761C0047F1E2 /* Foundation.framework */; };
 		8F5DCBE31946761C0047F1E2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5DCBE21946761C0047F1E2 /* CoreGraphics.framework */; };
 		8F5DCBE51946761C0047F1E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5DCBE41946761C0047F1E2 /* UIKit.framework */; };
@@ -39,7 +40,7 @@
 		8FE7BA29194A96BB008A81F5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA28194A96BB008A81F5 /* StoreKit.framework */; };
 		8FE7BA2B194A96D0008A81F5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7BA2A194A96D0008A81F5 /* SystemConfiguration.framework */; };
 		8FF91CB2194E593100EA5B35 /* EVTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF91CB1194E593100EA5B35 /* EVTableViewCell.m */; };
-		8FF91CB4194E768B00EA5B35 /* noProfileImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8FF91CB3194E768B00EA5B35 /* noProfileImage.jpg */; };
+		8FF91CB4194E768B00EA5B35 /* noProfileImage2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8FF91CB3194E768B00EA5B35 /* noProfileImage2.jpg */; };
 		8FF91CB8194E77D400EA5B35 /* FTWCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF91CB7194E77D400EA5B35 /* FTWCache.m */; };
 		8FF91CBB194E77EF00EA5B35 /* UIImageView+Network.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF91CBA194E77EF00EA5B35 /* UIImageView+Network.m */; };
 		8FF91CBE194E8A8900EA5B35 /* HttpCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FF91CBD194E8A8900EA5B35 /* HttpCommunication.m */; };
@@ -59,6 +60,7 @@
 		8F31A2E9194BDAA100974FD6 /* EVStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVStreamViewController.h; sourceTree = "<group>"; };
 		8F31A2EA194BDAA100974FD6 /* EVStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVStreamViewController.m; sourceTree = "<group>"; };
 		8F31A2EC194BE33200974FD6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		8F4F1848194F9A54009B3F6A /* noProfileImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = noProfileImage.jpg; path = tweetags/noProfileImage.jpg; sourceTree = "<group>"; };
 		8F5DCBDD1946761C0047F1E2 /* tweetags.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tweetags.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F5DCBE01946761C0047F1E2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8F5DCBE21946761C0047F1E2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,7 +99,7 @@
 		8FE7BA2A194A96D0008A81F5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8FF91CB0194E593100EA5B35 /* EVTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVTableViewCell.h; sourceTree = "<group>"; };
 		8FF91CB1194E593100EA5B35 /* EVTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVTableViewCell.m; sourceTree = "<group>"; };
-		8FF91CB3194E768B00EA5B35 /* noProfileImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = noProfileImage.jpg; sourceTree = "<group>"; };
+		8FF91CB3194E768B00EA5B35 /* noProfileImage2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = noProfileImage2.jpg; sourceTree = "<group>"; };
 		8FF91CB6194E77D400EA5B35 /* FTWCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTWCache.h; sourceTree = "<group>"; };
 		8FF91CB7194E77D400EA5B35 /* FTWCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTWCache.m; sourceTree = "<group>"; };
 		8FF91CB9194E77EF00EA5B35 /* UIImageView+Network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Network.h"; sourceTree = "<group>"; };
@@ -245,7 +247,8 @@
 		8FF91CB5194E769D00EA5B35 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				8FF91CB3194E768B00EA5B35 /* noProfileImage.jpg */,
+				8F4F1848194F9A54009B3F6A /* noProfileImage.jpg */,
+				8FF91CB3194E768B00EA5B35 /* noProfileImage2.jpg */,
 				8F5DCC1A194676AF0047F1E2 /* welcomePic.jpg */,
 				8F5DCC18194676A80047F1E2 /* sign_in_button_twitter.png */,
 			);
@@ -333,9 +336,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F5DCBFC1946761C0047F1E2 /* Images.xcassets in Resources */,
+				8F4F1849194F9A54009B3F6A /* noProfileImage.jpg in Resources */,
 				8F5DCC1B194676AF0047F1E2 /* welcomePic.jpg in Resources */,
 				8F5DCC19194676A80047F1E2 /* sign_in_button_twitter.png in Resources */,
-				8FF91CB4194E768B00EA5B35 /* noProfileImage.jpg in Resources */,
+				8FF91CB4194E768B00EA5B35 /* noProfileImage2.jpg in Resources */,
 				8F5DCBEB1946761C0047F1E2 /* InfoPlist.strings in Resources */,
 				8F5DCBF41946761C0047F1E2 /* Main.storyboard in Resources */,
 			);

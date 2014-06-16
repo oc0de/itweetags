@@ -14,5 +14,4 @@
 @property (strong, nonatomic) ACAccount *account;
 @property (strong, nonatomic) NSMutableArray *updates;
 @property (strong, nonatomic) NSString *hashtag;
-
 @end
