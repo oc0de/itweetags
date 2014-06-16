@@ -7,6 +7,9 @@
 //
 
 #import "EVStreamViewController.h"
+#import "EVTableViewCell.h"
+#import "UIImageView+Network.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @interface EVStreamViewController ()
@@ -20,7 +23,6 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -32,6 +34,7 @@
     if ([self.account.accountType.identifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
         [self retrieveTwitterStream];
     }
+//    self.tableView.delegate = self;
 }
 
 -(void)retrieveTwitterStream {
@@ -74,59 +77,53 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"updateTweet"];
+    EVTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     NSDictionary *tweet = self.updates[indexPath.row];
     NSDictionary *userInfo = tweet[@"user"];
     if ([self.account.accountType.identifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@/\%@",userInfo[@"name"],tweet[@"created_at"]];
-       // cell.textLabel.text = tweet[@"created_at"];
-//        cell.textLabel.text = [tweet objectForKey:@"screen_name"];
-//        cell.detailTextLabel.text   = [tweet valueForKeyPath:@"user.name"];
+        cell.userName.text      = [NSString stringWithFormat:@"%@",userInfo[@"name"]];
+        cell.screenName.text    = [NSString stringWithFormat:@"@%@",userInfo[@"screen_name"]];
+        cell.tweetText.text     = [NSString stringWithFormat:@"%@",tweet[@"text"]];
+        NSString *imageUrl      = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url"]];
+        NSString *imageHttpsUrl = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url_https"]];
+        if (imageUrl != nil ) {
+            cell.thumbnail.layer.cornerRadius = 4.5;
+            cell.thumbnail.clipsToBounds = YES;
+            [cell.thumbnail loadImageFromURL:[NSURL URLWithString:imageUrl]
+                            placeholderImage:[UIImage imageNamed:@"noProfileImage"] cachingKey:imageUrl];
+        } else if (imageHttpsUrl != nil) {
+            NSLog(@"imageHttpsUrl");
+            [cell.thumbnail loadImageFromURL:[NSURL URLWithString:imageHttpsUrl]
+                            placeholderImage:[UIImage imageNamed:@"noProfileImage"] cachingKey:imageHttpsUrl];
+        } else {
+            cell.thumbnail.image = [UIImage imageNamed:@"noProfileImage"];
+        }
+        
     }
+    //cell.tweetText.delegate = self;
+//    [self textViewDidChange:cell.tweetText];
+
     return cell;
 }
+
+
 - (IBAction)refreshButtonPressed:(UIRefreshControl *)sender {
     [self retrieveTwitterStream];
     [sender endRefreshing];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)textViewDidChange:(UITextView *)textView
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+    CGFloat fixedWidth = textView.frame.size.width;
+    NSLog(@"%f",textView.frame.size.height);
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = textView.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    NSLog(@"%f",newSize.height);
+    textView.frame = newFrame;
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation

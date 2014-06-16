@@ -10,11 +10,9 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 
-@interface EVStreamViewController : UITableViewController
+@interface EVStreamViewController : UITableViewController <UITextViewDelegate>
 @property (strong, nonatomic) ACAccount *account;
 @property (strong, nonatomic) NSMutableArray *updates;
 @property (strong, nonatomic) NSString *hashtag;
-
-
 
 @end
