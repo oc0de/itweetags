@@ -201,7 +201,7 @@
                                     <outlet property="thumbnail" destination="ag5-eC-1T5" id="oKr-Jw-XkU"/>
                                     <outlet property="tweetText" destination="Ipi-qj-AM6" id="0Si-Kd-ZZv"/>
                                     <outlet property="userName" destination="0cm-8V-AiC" id="oMB-Zm-jor"/>
-                                    <segue destination="KJo-Wd-YD3" kind="push" id="8gj-y5-oq7"/>
+                                    <segue destination="KJo-Wd-YD3" kind="push" identifier="showTweet" id="8gj-y5-oq7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
