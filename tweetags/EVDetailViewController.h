@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EVDetailViewController : UIViewController
+@interface EVDetailViewController : UIViewController <UITextViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSDictionary *detailTweet;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbNail;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
+@property (weak, nonatomic) IBOutlet UILabel *screenName;
+@property (weak, nonatomic) IBOutlet UITextView *tweetDetail;
+@property (weak, nonatomic) IBOutlet UILabel *createdAt;
+@property (weak, nonatomic) IBOutlet UILabel *tweetText;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

@@ -115,7 +115,7 @@
     NSDictionary *tweet = self.updates[indexPath.row];
     NSDictionary *userInfo = tweet[@"user"];
     if ([self.account.accountType.identifier isEqualToString:ACAccountTypeIdentifierTwitter]) {
-        self.customCell.userName.text      = [NSString stringWithFormat:@"%@",userInfo[@"name"]];
+        self.customCell.userName.text      = userInfo[@"name"];
         self.customCell.screenName.text    = [NSString stringWithFormat:@"@%@",userInfo[@"screen_name"]];
         self.customCell.tweetText.text     = [NSString stringWithFormat:@"%@",tweet[@"text"]];
         NSString *imageUrl      = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url"]];
@@ -152,16 +152,36 @@
     [sender endRefreshing];
 }
 
+- (void)setDetailItem:(id)newDetailItem
+{
+    if (_detailItem != newDetailItem) {
+        _detailItem = newDetailItem;
+        
+        // Update the view.
+        [self configureView];
+    }
+}
 
-/*
+- (void)configureView
+{
+    // Update the user interface for the detail item.
+    
+    if (self.detailItem) {
+        
+    }
+}
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     if ([[segue identifier] isEqualToString:@"showTweet"]) {
+         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+         NSDictionary *tweet = self.updates[indexPath.row];
+        [[segue destinationViewController] setDetailItem:tweet];
+     }
  }
- */
+
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "EVDetailViewController.h"
+#import "UIImageView+Network.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface EVDetailViewController ()
 - (void)configureView;
@@ -28,18 +30,29 @@
 
 - (void)configureView
 {
-    // Update the user interface for the detail item.
-
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+        NSDictionary *userInfo = self.detailItem[@"user"];
+        self.userName.text = userInfo[@"name"];
+        self.screenName.text    = [NSString stringWithFormat:@"@%@",userInfo[@"screen_name"]];
+        self.tweetDetail.text   = self.detailItem[@"text"];
+        NSString *imageUrl      = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url"]];
+        if (imageUrl != nil ) {
+            self.thumbNail.layer.cornerRadius = 4.5;
+            self.thumbNail.clipsToBounds = YES;
+            [self.thumbNail loadImageFromURL:[NSURL URLWithString:imageUrl]
+                                       placeholderImage:[UIImage imageNamed:@"noProfileImage"] cachingKey:imageUrl];
+        } else {
+            self.thumbNail.image = [UIImage imageNamed:@"noProfileImage"];
+        }
     }
 }
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+
 }
 
 - (void)didReceiveMemoryWarning
