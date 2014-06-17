@@ -46,6 +46,12 @@
             });
         }
     }];
+//    if (self.accounts.firstObject == nil) {
+//        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"No Account Exist"
+//                                                          message:@"Please go to Settings -> Twitter   Enter your account"
+//                                                         delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//        [message show];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
