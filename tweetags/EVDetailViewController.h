@@ -17,6 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *screenName;
 @property (weak, nonatomic) IBOutlet UITextView *tweetDetail;
 @property (weak, nonatomic) IBOutlet UILabel *createdAt;
-@property (weak, nonatomic) IBOutlet UILabel *tweetText;
+
 
 @end
