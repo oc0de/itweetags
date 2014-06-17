@@ -27,10 +27,9 @@
         [self configureView];
     }
 }
-
-//        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(120, 5, 50, 50)];
-//        imageView.image = [UIImage imageNamed:@"tagName"];
-//        [cell.contentView addSubview:imageView];
+- (IBAction)toggleMap:(id)sender {
+    [self.mapView setHidden:![self.mapView isHidden]];
+}
 
 
 - (void)configureView
@@ -38,6 +37,20 @@
     if (self.detailItem) {
         NSDictionary *userInfo = self.detailItem[@"user"];
         self.userName.text = userInfo[@"name"];
+        
+        if ([userInfo[@"location"] isEqualToString:@""]) {
+            self.location.text = @"No Location";
+        } else {
+            self.location.text = userInfo[@"location"];
+        }
+        
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+        NSDate *date = [dateFormat dateFromString:userInfo[@"created_at"]];
+        [dateFormat setDateFormat:@"eee MMM dd yyyy"];
+        NSString *dateStr = [dateFormat stringFromDate:date];
+        self.createdAt.text = dateStr;
         self.screenName.text    = [NSString stringWithFormat:@"@%@",userInfo[@"screen_name"]];
         self.tweetDetail.text   = self.detailItem[@"text"];
         NSString *imageUrl      = [NSString stringWithFormat:@"%@",userInfo[@"profile_image_url"]];
@@ -49,6 +62,8 @@
         } else {
             self.thumbNail.image = [UIImage imageNamed:@"noProfileImage"];
         }
+       
+        
     }
 }
 
