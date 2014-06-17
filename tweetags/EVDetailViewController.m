@@ -28,6 +28,11 @@
     }
 }
 
+//        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(120, 5, 50, 50)];
+//        imageView.image = [UIImage imageNamed:@"tagName"];
+//        [cell.contentView addSubview:imageView];
+
+
 - (void)configureView
 {
     if (self.detailItem) {

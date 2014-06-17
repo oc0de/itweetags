@@ -10,6 +10,7 @@
 #import "EVDetailViewController.h"
 #import "EVAccountsViewController.h"
 #import "EVStreamViewController.h"
+#import "EVTagTableViewCell.h"
 #import <Parse/Parse.h>
 
 
@@ -18,6 +19,8 @@
 }
 @property (strong, nonatomic) NSArray *searchResults;
 @property (strong, nonatomic) NSMutableArray *objects;
+@property (strong,nonatomic) EVTagTableViewCell *customCell;
+
 
 @end
 
@@ -116,17 +119,6 @@
     [tag saveInBackground];
 }
 
--(void)removeTagNameFromParse:(NSString *)tagName {
-//    [deleteQuery whereKey:@"ownerName" equalTo:@"@butb0rn"];
-//    [deleteQuery findObjectsInBackgroundWithBlock:^(NSArray *tags, NSError *error) {
-//        if (!error) {
-//            
-//        } else {
-//            NSLog(@"Error: %@ %@", error, [error userInfo]);
-//        }
-//    }];
-    
-}
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     
@@ -169,17 +161,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"Cell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
+    static NSString *cellID = @"TagCell";  //UITableViewCell
+    EVTagTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[EVTagTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+//        cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
+        cell.tagName.text = [self.searchResults objectAtIndex:indexPath.row];
         
     } else {
-        cell.textLabel.text = [self.objects objectAtIndex:indexPath.row];
+//        cell.textLabel.text = [self.objects objectAtIndex:indexPath.row];
+        cell.tagName.text = [self.objects objectAtIndex:indexPath.row];
     }
     return cell;
 }
@@ -242,18 +236,21 @@
 {
     
     if ([[segue identifier] isEqualToString:@"showTweets"]) {
-        NSIndexPath *selectedTag = [self.tableView indexPathForSelectedRow];
+//        NSIndexPath *selectedTag = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSString *tweet = self.objects[indexPath.row];
         ACAccount *account = [self account];
         EVStreamViewController *showTweets = segue.destinationViewController;
        
         if (self.searchDisplayController.active) {
             NSIndexPath *selectedTagFromSearchResult = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-            showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
-            showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTagFromSearchResult].textLabel.text;
+            NSString *tweet = self.searchResults[selectedTagFromSearchResult.row];
+            showTweets.title = tweet;
+            showTweets.hashtag = tweet;
             showTweets.account = account;
         } else {
-            showTweets.title = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
-            showTweets.hashtag = [self.tableView cellForRowAtIndexPath:selectedTag].textLabel.text;
+            showTweets.title = tweet;
+            showTweets.hashtag = tweet;
             showTweets.account = account;
         }
     }
