@@ -154,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				8FF91CB5194E769D00EA5B35 /* images */,
+				8F5DCC18194676A80047F1E2 /* sign_in_button_twitter.png */,
 				8F5DCBE61946761C0047F1E2 /* tweetags */,
 				8F5DCC081946761C0047F1E2 /* tweetagsTests */,
 				8F5DCBDF1946761C0047F1E2 /* Frameworks */,
@@ -259,7 +260,6 @@
 				8F4F1848194F9A54009B3F6A /* noProfileImage.jpg */,
 				8FF91CB3194E768B00EA5B35 /* tagName.jpg */,
 				8F5DCC1A194676AF0047F1E2 /* welcomePic.jpg */,
-				8F5DCC18194676A80047F1E2 /* sign_in_button_twitter.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
